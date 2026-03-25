@@ -4,10 +4,12 @@ import './index.css'
 import App from './App.jsx'
 import { seedIfNeeded } from './seed.js'
 
-seedIfNeeded().then(() => {
-  createRoot(document.getElementById('root')!).render(
-    <StrictMode>
-      <App />
-    </StrictMode>,
-  )
-})
+seedIfNeeded()
+  .catch(err => console.error('[FieldLog] Seed failed, continuing anyway:', err))
+  .then(() => {
+    createRoot(document.getElementById('root')!).render(
+      <StrictMode>
+        <App />
+      </StrictMode>,
+    )
+  })
