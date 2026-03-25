@@ -430,11 +430,12 @@ const TODOS = [
 export async function seedIfNeeded() {
   if (localStorage.getItem(SEED_KEY)) return
 
-  await db.transaction('rw', db.workouts, db.scans, db.goals, db.todos, async () => {
+  await db.transaction('rw', db.workouts, db.scans, db.goals, db.todos, db.xp, async () => {
     await db.workouts.bulkPut(WORKOUTS)
     await db.scans.put(SCAN)
     await db.goals.bulkPut(GOALS)
     await db.todos.bulkPut(TODOS)
+    await db.xp.put({ id: 'singleton', totalXp: 0, earnedToday: 0, earnedAchievements: [], lastUpdated: null })
   })
 
   localStorage.setItem(SEED_KEY, '1')

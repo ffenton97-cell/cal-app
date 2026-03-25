@@ -6,12 +6,8 @@ import { getLevelInfo, ACHIEVEMENTS } from '../theme'
 const XP_ID = 'singleton'
 
 async function getXPRecord() {
-  let record = await db.xp.get(XP_ID)
-  if (!record) {
-    record = { id: XP_ID, totalXp: 0, earnedToday: 0, earnedAchievements: [], lastUpdated: null }
-    await db.xp.put(record)
-  }
-  return record
+  return (await db.xp.get(XP_ID)) ??
+    { id: XP_ID, totalXp: 0, earnedToday: 0, earnedAchievements: [], lastUpdated: null }
 }
 
 export function useXP() {
