@@ -2,11 +2,12 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* ─── Font utilities ──────────────────────────────────────────────────────── */
+.ff-heading { font-family: 'Syne', system-ui, sans-serif; }
+.ff-mono    { font-family: 'DM Mono', ui-monospace, monospace; }
+
+/* ─── Base reset ──────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body, #root {
   height: 100%;
@@ -16,8 +17,34 @@ html, body, #root {
 body {
   background: #0f0f0f;
   color: #e5e5e5;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'DM Mono', ui-monospace, monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior: none;
 }
+
+/* ─── Input / textarea base ───────────────────────────────────────────────── */
+.fl-input {
+  background:  #161616;
+  border:      1px solid #252525;
+  border-radius: 0;
+  color:       #e5e5e5;
+  outline:     none;
+  transition:  border-color 0.1s;
+  padding:     0.6rem 0.75rem;
+  font-family: 'DM Mono', ui-monospace, monospace;
+  font-size:   0.875rem;
+  width:       100%;
+  display:     block;
+
+  &::placeholder { color: #333; }
+  &:focus         { border-color: #d4a853; }
+  &[type=number]  { -moz-appearance: textfield; }
+  &[type=number]::-webkit-inner-spin-button,
+  &[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 4px; height: 4px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: #2a2a2a; }

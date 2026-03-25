@@ -27,8 +27,9 @@ export default function Nav() {
             to={to}
             end={to === '/'}
             className={({ isActive }) =>
-              `flex flex-col items-center gap-0.5 flex-shrink-0 px-3 py-2 text-[10px] transition-colors ${
-                isActive ? 'text-violet-400' : 'text-zinc-600 hover:text-zinc-400'
+              `flex flex-col items-center gap-0.5 flex-shrink-0 px-3 py-2 ff-mono
+               text-[10px] transition-colors tracking-wide ${
+                isActive ? 'text-[#d4a853]' : 'text-[#3a3a3a] hover:text-[#525252]'
               }`
             }
           >

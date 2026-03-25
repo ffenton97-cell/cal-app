@@ -5,43 +5,60 @@ import { useStreaks } from '../hooks/useStreaks'
 export default function Header() {
   const { totalXp, earnedToday, levelInfo } = useXP()
   const { checkInStreak } = useStreaks()
-  const { current, progress, xpIntoLevel, xpForNext } = levelInfo ?? {
-    current: { level: 1, title: 'Rookie' }, progress: 0, xpIntoLevel: 0, xpForNext: 100,
+
+  const { current, next, progress, xpIntoLevel, xpForNext } = levelInfo ?? {
+    current: { level: 1, title: 'Recruit' },
+    next:    { xpRequired: 100 },
+    progress: 0,
+    xpIntoLevel: 0,
+    xpForNext: 100,
   }
 
   return (
-    <header className="flex flex-col gap-1 px-4 pt-3 pb-2 bg-[#141414] border-b border-[#2a2a2a]">
-      {/* Top row */}
-      <div className="flex items-center justify-between">
+    <header className="px-4 pt-3 pb-2.5 bg-[#141414] border-b border-[#252525] shrink-0">
+      {/* top row */}
+      <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-bold uppercase tracking-widest text-violet-400">
-            Lvl {current.level}
+          <span className="ff-heading text-xs font-bold text-[#d4a853] tracking-widest uppercase">
+            LVL {current.level}
           </span>
-          <span className="text-xs text-zinc-500">{current.title}</span>
+          <span className="w-px h-3 bg-[#252525]" />
+          <span className="ff-mono text-[10px] text-[#525252] uppercase tracking-wider">
+            {current.title}
+          </span>
         </div>
-        <div className="flex items-center gap-3 text-xs text-zinc-500">
+
+        <div className="flex items-center gap-3">
           {checkInStreak > 0 && (
-            <span className="flex items-center gap-1">
-              🔥 <span className="text-amber-400 font-semibold">{checkInStreak}</span>
-            </span>
+            <div className="flex items-center gap-1">
+              <span className="text-[11px]">🔥</span>
+              <span className="ff-mono text-[11px] text-[#fb923c] tabular-nums">{checkInStreak}</span>
+            </div>
           )}
-          <span>{format(new Date(), 'EEE d MMM')}</span>
+          {earnedToday > 0 && (
+            <span className="ff-mono text-[10px] text-[#d4a853]">+{earnedToday} today</span>
+          )}
+          <span className="ff-mono text-[10px] text-[#3a3a3a] uppercase tracking-wider">
+            {format(new Date(), 'EEE d MMM')}
+          </span>
         </div>
       </div>
 
       {/* XP bar */}
       <div className="flex items-center gap-2">
-        <div className="flex-1 h-1.5 bg-[#2a2a2a] rounded-full overflow-hidden">
+        <div className="flex-1 h-[2px] bg-[#1e1e1e] relative">
           <div
-            className="h-full bg-violet-600 rounded-full transition-all duration-500"
-            style={{ width: `${progress * 100}%` }}
+            className="h-full transition-all duration-700"
+            style={{
+              width: `${progress * 100}%`,
+              background: '#d4a853',
+              boxShadow: progress > 0.5 ? '0 0 6px #d4a85360' : 'none',
+            }}
           />
         </div>
-        <span className="text-[10px] text-zinc-500 tabular-nums whitespace-nowrap">
-          {xpIntoLevel}/{xpForNext} XP
-          {earnedToday > 0 && (
-            <span className="text-violet-400 ml-1">+{earnedToday} today</span>
-          )}
+        <span className="ff-mono text-[10px] text-[#3a3a3a] tabular-nums whitespace-nowrap">
+          {xpIntoLevel.toLocaleString()}/{xpForNext.toLocaleString()}
+          {next ? '' : ' MAX'}
         </span>
       </div>
     </header>
